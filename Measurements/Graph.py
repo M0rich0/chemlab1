@@ -1,53 +1,45 @@
 #This code produces the bar graph for the measurements lab
 import matplotlib.pyplot as plt
 
-# Data from the five trials
+# Trial data
 trials = ["Trial 1", "Trial 2", "Trial 3", "Trial 4", "Trial 5"]
 
 volumes = [10.05, 20.01, 30.00, 40.02, 50.00]
-masses = [54.370, 63.730, 73.665, 83.438, 93.476]
+masses = [10.178, 19.538, 29.473, 39.246, 49.284]
 
 # Calculate density for each trial
 densities = [mass / volume for mass, volume in zip(masses, volumes)]
 
-# Calculate experimental average density
+# Calculate average experimental density
 average_density = sum(densities) / len(densities)
 
-# True density of water at 22.9 °C
+# Accepted/true density of water at 22.9 °C
 true_density = 0.9976
 
-# Print the results
-for trial, density in zip(trials, densities):
-    print(f"{trial}: {density:.3f} g/mL")
-
-print(f"Average density: {average_density:.3f} g/mL")
-print(f"True density: {true_density:.4f} g/mL")
-
-# Create the bar graph
+# Create bar graph
 plt.figure(figsize=(10, 6))
 
 bars = plt.bar(
     trials,
     densities,
-    color="skyblue",
-    edgecolor="black",
-    label="Experimental Density"
+    color=["#4C78A8", "#59A14F", "#F28E2B", "#E15759", "#B279A2"],
+    edgecolor="black"
 )
 
 # Average density line
 plt.axhline(
     average_density,
-    color="red",
+    color="blue",
     linestyle="--",
     linewidth=2,
-    label=f"Average = {average_density:.3f} g/mL"
+    label=f"Average Density = {average_density:.4f} g/mL"
 )
 
 # True density line
 plt.axhline(
     true_density,
-    color="green",
-    linestyle="-",
+    color="red",
+    linestyle="--",
     linewidth=2,
     label=f"True Density = {true_density:.4f} g/mL"
 )
@@ -56,20 +48,27 @@ plt.axhline(
 for bar, density in zip(bars, densities):
     plt.text(
         bar.get_x() + bar.get_width() / 2,
-        bar.get_height() + 0.1,
-        f"{density:.3f}",
+        bar.get_height() + 0.002,
+        f"{density:.4f}",
         ha="center",
+        va="bottom",
         fontsize=10
     )
 
 # Labels and title
-plt.xlabel("Trial")
-plt.ylabel("Density (g/mL)")
-plt.title("Density of Water at 22.9 °C Obtained with a Graduated Cylinder")
+plt.title("Density of Water at 22.9 °C Obtained with a Graduated Cylinder", fontsize=16, fontweight="bold")
+plt.xlabel("Trial", fontsize=12)
+plt.ylabel("Density (g/mL)", fontsize=12)
 
-plt.ylim(0, 6)
-plt.grid(axis="y", linestyle="--", alpha=0.4)
+# Set y-axis range so the differences are easier to see
+plt.ylim(0.95, 1.03)
+
+# Add grid
+plt.grid(axis="y", linestyle=":", alpha=0.5)
+
+# Legend
 plt.legend()
 
 plt.tight_layout()
 plt.show()
+
