@@ -4,19 +4,19 @@ import matplotlib.pyplot as plt
 # Trial data
 trials = ["Trial 1", "Trial 2", "Trial 3", "Trial 4", "Trial 5"]
 
-volumes = [10.05, 20.01, 30.00, 40.02, 50.00]
-masses = [10.178, 19.538, 29.473, 39.246, 49.284]
+volumes = [10.00, 20.00, 30.00, 40.00, 50.00]
+masses = [10.183, 19.853, 29.793, 39.677, 49.605]
 
 # Calculate density for each trial
 densities = [mass / volume for mass, volume in zip(masses, volumes)]
 
-# Calculate average experimental density
+# Calculate average density
 average_density = sum(densities) / len(densities)
 
-# Accepted/true density of water at 22.9 °C
-true_density = 0.9976
+# True density of water at 23.0 °C
+true_density = 0.9975
 
-# Create bar graph
+# Create the bar graph
 plt.figure(figsize=(10, 6))
 
 bars = plt.bar(
@@ -26,7 +26,7 @@ bars = plt.bar(
     edgecolor="black"
 )
 
-# Average density line
+# Add average density line
 plt.axhline(
     average_density,
     color="blue",
@@ -35,7 +35,7 @@ plt.axhline(
     label=f"Average Density = {average_density:.4f} g/mL"
 )
 
-# True density line
+# Add true density line
 plt.axhline(
     true_density,
     color="red",
@@ -48,22 +48,27 @@ plt.axhline(
 for bar, density in zip(bars, densities):
     plt.text(
         bar.get_x() + bar.get_width() / 2,
-        bar.get_height() + 0.002,
+        bar.get_height() + 0.001,
         f"{density:.4f}",
         ha="center",
         va="bottom",
         fontsize=10
     )
 
-# Labels and title
-plt.title("Density of Water at 22.9 °C Obtained with a Graduated Cylinder", fontsize=16, fontweight="bold")
+# Title and axis labels
+plt.title(
+    "Density of Water at 23.0 °C Obtained with a Volumetric Pipette",
+    fontsize=16,
+    fontweight="bold"
+)
+
 plt.xlabel("Trial", fontsize=12)
 plt.ylabel("Density (g/mL)", fontsize=12)
 
-# Set y-axis range so the differences are easier to see
-plt.ylim(0.95, 1.03)
+# Make the differences visible
+plt.ylim(0.98, 1.025)
 
-# Add grid
+# Grid
 plt.grid(axis="y", linestyle=":", alpha=0.5)
 
 # Legend
